@@ -1,8 +1,12 @@
 export default async function getUserPost(userId: string) {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
+    const res = await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`, {
+        next: {
+            revalidate: 5
+        }
+    })
 
     if (!res.ok) {
-        throw new Error('Failed to fetch data');
+        return undefined
     }
 
     return res.json()
